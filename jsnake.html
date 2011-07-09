@@ -7,12 +7,14 @@
     <script src="jsnake.js"></script> 
     <script> 
 YUI().use("jsnake", function(Y) {
-    var jsn = new Y.JSnake();
+    var jsn = new Y.JSnake({tilesNum: 20, tilesSize: 20});
     jsn.render();
 });
     </script> 
-    <style> 
-    canvas { border: 1px solid #EEE; }
+    <style>
+    body { background-color: #222; }
+    canvas { border: 1px solid #EEE; background-color: #FFF; 
+    position: absolute; top: 50%; left: 50%; margin-left: -200px; margin-top: -200px; }
     </style> 
 </head> 
  

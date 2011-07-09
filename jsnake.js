@@ -19,7 +19,7 @@ YUI.add('jsnake', function(Y){
         },
         TILES_NUM = 40,
         TILES_SIZE = 10, //px
-        BASE_SPEED = 500,
+        BASE_SPEED = 700,
         DIRS = {
             // maps to keycodes
             LEFT:   37,
@@ -39,6 +39,7 @@ YUI.add('jsnake', function(Y){
     JSnake.ATTRS = {
     	tilesNum: {value: 20, setOnce: true},
     	tilesSize: {value: 20, setOnce: true},
+    	drawGrid: {value: false},
         snakeDir: {value: DIRS.RIGHT},
         score: {value: 0},
         apple: {},
@@ -105,6 +106,9 @@ YUI.add('jsnake', function(Y){
                         this.set('status', STATI.INIT);   
                     }
                 }, document, "down:32", this);
+        	Y.on('key', function(e) {
+        			this.set('drawGrid', !this.get('drawGrid'));
+        		}, document, "down:71", this);
             
         },
         syncUI: function() {
@@ -136,6 +140,9 @@ YUI.add('jsnake', function(Y){
         	var size = this.get('size'),
         		ctx = this.canvas;
             ctx.clearRect(0, 0, size, size);
+            if (this.get('drawGrid')) {
+            	this._drawGrid();
+            }
         },
         _drawGrid: function() {
         	var size = this.get('size'),
@@ -182,11 +189,9 @@ YUI.add('jsnake', function(Y){
         },
         _drawStatus: function() {
         	var status = this.get('status');
-        	if (status === STATI.INIT) {
-        		this.writeText(STATI_LABELS[status]);
-        	} else if (status === STATI.PLAY) {
-				this.writeText(this.get('score'));        	
-        	} else if (status === STATI.OVER) {
+        	if (status === STATI.PLAY) {
+				this.writeText(this.get('score'));
+			} else {      	
         		this.writeText(STATI_LABELS[status]);
         	}
 
